@@ -10,6 +10,18 @@ import {
 } from '@angular/core';
 import { DUMMY_USERS } from '../dummy-users';
 const randomIndex = Math.floor(Math.random() * DUMMY_USERS.length);
+
+// type User = {
+//   id: string;
+//   avatar: string;
+//   name: string;
+// };
+
+interface User {
+  id: string;
+  avatar: string;
+  name: string;
+}
 @Component({
   selector: 'app-user',
   standalone: true,
@@ -21,11 +33,7 @@ export class UserComponent {
   // Note:- @Component(), @Input() and @Output are the decorators
 
   // Without Input Signal
-  @Input({ required: true }) users!: {
-    id: string;
-    avatar: string;
-    name: string;
-  };
+  @Input({ required: true }) users!: User;
   @Output() selectedUser = new EventEmitter();
 
   get imagePath() {
