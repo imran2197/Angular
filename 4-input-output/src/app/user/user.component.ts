@@ -4,6 +4,7 @@ import {
   EventEmitter,
   input,
   Input,
+  output,
   Output,
   signal,
 } from '@angular/core';
@@ -20,22 +21,28 @@ export class UserComponent {
   // Note:- @Component(), @Input() and @Output are the decorators
 
   // Without Input Signal
-  @Input({ required: true }) id!: string;
-  @Input({ required: true }) avatar!: string;
-  @Input({ required: true }) name!: string;
+  @Input({ required: true }) users!: {
+    id: string;
+    avatar: string;
+    name: string;
+  };
   @Output() selectedUser = new EventEmitter();
 
   get imagePath() {
-    return `../../assets/users/${this.avatar}`;
+    return `../../assets/users/${this.users?.avatar}`;
+  }
+
+  onSelectUser() {
+    this.selectedUser.emit(this.users?.id);
   }
 
   // With Signals Input
-  // avatar = input.required<string>();
-  // name = input.required<string>();
+  // users = input.required<{}>()
+  // selectedUser = output<string>();
 
   // imagePath = computed(() => `../../assets/users/${this.avatar()}`);
 
-  onSelectUser() {
-    this.selectedUser.emit(this.id);
-  }
+  // onSelectUser() {
+  //   this.selectedUser.emit(this.id());
+  // }
 }
