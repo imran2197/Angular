@@ -9,6 +9,7 @@
 
   <app-tasks
     *ngIf="getSelectedUser; else fallback"
+    [userId]="getSelectedUser!.id"
     [name]="getSelectedUser!.name"
   ></app-tasks>
 
