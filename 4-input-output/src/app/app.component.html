@@ -1,5 +1,26 @@
 <app-header />
+<!-- *ngFor and *ngIf are structural directives -->
 <main>
+  <ul id="users">
+    <li *ngFor="let user of users">
+      <app-user [users]="user" (selectedUser)="onSelectedUser($event)" />
+    </li>
+  </ul>
+
+  <app-tasks
+    *ngIf="getSelectedUser; else fallback"
+    [name]="getSelectedUser!.name"
+  ></app-tasks>
+
+  <ng-template #fallback>
+    <p *ngIf="!getSelectedUser" id="fallback">
+      Select a user to see their tasks
+    </p>
+  </ng-template>
+</main>
+
+<!-- @for and @if are available since Angular 17 -->
+<!-- <main>
   <ul id="users">
     @for(user of users; track user.id) {
     <li>
@@ -12,4 +33,4 @@
   } @else {
   <p id="fallback">Select a user to see their tasks</p>
   }
-</main>
+</main> -->
