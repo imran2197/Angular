@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { TaskComponent } from './task/task.component';
 import { AddTaskComponent } from './add-task/add-task.component';
+import { type addTask } from './add-task/addTask-model';
 
 @Component({
   selector: 'app-tasks',
@@ -10,8 +11,8 @@ import { AddTaskComponent } from './add-task/add-task.component';
   styleUrl: './tasks.component.css',
 })
 export class TasksComponent {
-  @Input({ required: true }) userId?: string;
-  @Input({ required: true }) name?: string;
+  @Input({ required: true }) userId!: string;
+  @Input({ required: true }) name!: string;
   tasks = [
     {
       id: 't1',
@@ -50,11 +51,22 @@ export class TasksComponent {
     this.tasks = this.tasks.filter((task) => task.id !== id);
   }
 
-  onAddTask() {
+  onStartAddTask() {
     this.showAddTaskPopup = true;
   }
 
   onClosePopup() {
+    this.showAddTaskPopup = false;
+  }
+
+  onAddTask(taskData: addTask) {
+    this.tasks.push({
+      id: new Date().getTime().toString(),
+      userId: this.userId,
+      title: taskData.title,
+      summary: taskData.summary,
+      dueDate: taskData.date,
+    });
     this.showAddTaskPopup = false;
   }
 }
