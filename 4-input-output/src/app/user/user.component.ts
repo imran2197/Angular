@@ -26,6 +26,7 @@ export class UserComponent {
 
   // Without Input Signal
   @Input({ required: true }) users!: User;
+  @Input({ required: true }) isSelected!: boolean;
   @Output() selectedUser = new EventEmitter();
 
   get imagePath() {

@@ -1,14 +1,17 @@
+@if(showAddTaskPopup) {
+<app-add-task (onCancel)="onClosePopup()"></app-add-task>
+}
 <section id="tasks">
   <header>
     <h2>{{ name }}'s Tasks</h2>
     <menu>
-      <button>Add Task</button>
+      <button (click)="onAddTask()">Add Task</button>
     </menu>
   </header>
   <ul>
     @for(task of getTaskForUser; track task.id) {
     <li>
-      <app-task [task]="task" />
+      <app-task [task]="task" (completeTask)="onCompleteTask($event)" />
     </li>
     }
   </ul>
