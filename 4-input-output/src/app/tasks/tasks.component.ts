@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { TaskComponent } from './task/task.component';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { type addTask } from './add-task/addTask-model';
+import { TasksService } from './tasks.service';
 
 @Component({
   selector: 'app-tasks',
@@ -13,42 +14,26 @@ import { type addTask } from './add-task/addTask-model';
 export class TasksComponent {
   @Input({ required: true }) userId!: string;
   @Input({ required: true }) name!: string;
-  tasks = [
-    {
-      id: 't1',
-      userId: 'u1',
-      title: 'Master Angular',
-      summary:
-        'Learn all the basic and advanced features of Angular & how to apply them.',
-      dueDate: '2025-12-31',
-    },
-    {
-      id: 't2',
-      userId: 'u3',
-      title: 'Build first prototype',
-      summary: 'Build a first prototype of the online shop website',
-      dueDate: '2024-05-31',
-    },
-    {
-      id: 't3',
-      userId: 'u3',
-      title: 'Prepare issue template',
-      summary:
-        'Prepare and describe an issue template which will help with project management',
-      dueDate: '2024-06-15',
-    },
-  ];
   showAddTaskPopup = false;
+  // private taskService = new TasksService();
+
+  // Note :-
+  //   Q: What is Dependency Injection in Angular?
+  // Dependency Injection is a design pattern where Angular creates and provides the required dependencies (services) instead of the component creating them manually.
+
+  // Q: Why should we use DI instead of new?
+  // Avoids multiple instances
+  // Promotes reusability
+  // Improves testability
+  // Reduces tight coupling
+
+  // Q: What happens if we use new TasksService()?
+  // Each component gets a new instance, which breaks shared state and is not recommended in Angular.
+
+  constructor(private taskService: TasksService) {}
 
   get getTaskForUser() {
-    const filteredData = this.tasks.filter(
-      (task) => task.userId === this.userId
-    );
-    return filteredData;
-  }
-
-  onCompleteTask(id: string) {
-    this.tasks = this.tasks.filter((task) => task.id !== id);
+    return this.taskService.getUserTasks(this.userId);
   }
 
   onStartAddTask() {
@@ -56,17 +41,6 @@ export class TasksComponent {
   }
 
   onClosePopup() {
-    this.showAddTaskPopup = false;
-  }
-
-  onAddTask(taskData: addTask) {
-    this.tasks.push({
-      id: new Date().getTime().toString(),
-      userId: this.userId,
-      title: taskData.title,
-      summary: taskData.summary,
-      dueDate: taskData.date,
-    });
     this.showAddTaskPopup = false;
   }
 }

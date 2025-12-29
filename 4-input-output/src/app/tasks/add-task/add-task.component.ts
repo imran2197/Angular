@@ -1,6 +1,14 @@
-import { Component, EventEmitter, Output, signal } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  Output,
+  signal,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { addTask } from './addTask-model';
+import { TasksService } from '../tasks.service';
 
 @Component({
   selector: 'app-add-task',
@@ -10,8 +18,13 @@ import { addTask } from './addTask-model';
   styleUrl: './add-task.component.css',
 })
 export class AddTaskComponent {
-  @Output() onCancel = new EventEmitter<void>();
-  @Output() onAdd = new EventEmitter<addTask>();
+  @Input({ required: true }) userId!: string;
+  @Output() close = new EventEmitter<void>();
+
+  private tasksService = inject(TasksService);
+  // constructor(private tasksService: TasksService) {
+
+  // }
 
   // 2 way binding without signals
   title = '';
@@ -24,14 +37,18 @@ export class AddTaskComponent {
   // dueDate = signal('');
 
   onCancelAddTask() {
-    this.onCancel.emit();
+    this.close.emit();
   }
 
   onSubmit() {
-    this.onAdd.emit({
-      title: this.title,
-      summary: this.summary,
-      date: this.dueDate,
-    });
+    this.tasksService.addTask(
+      {
+        title: this.title,
+        summary: this.summary,
+        date: this.dueDate,
+      },
+      this.userId
+    );
+    this.close.emit();
   }
 }
