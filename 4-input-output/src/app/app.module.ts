@@ -7,7 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { TaskComponent } from './tasks/task/task.component';
 import { AddTaskComponent } from './tasks/add-task/add-task.component';
 import { FormsModule } from '@angular/forms';
-import { SharedModule } from './shared/card/shared.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
