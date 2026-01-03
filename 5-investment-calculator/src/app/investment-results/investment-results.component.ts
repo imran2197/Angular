@@ -1,5 +1,5 @@
 import { CurrencyPipe, NgFor, NgIf } from '@angular/common';
-import { Component, inject, input, Input } from '@angular/core';
+import { Component, computed, inject, input, Input } from '@angular/core';
 import { AnnualData } from '../../annual-data.model';
 import { InvestmentService } from '../investment.service';
 
@@ -16,7 +16,11 @@ export class InvestmentResultsComponent {
 
   private investmentService = inject(InvestmentService);
 
-  get results() {
-    return this.investmentService.resultsData;
-  }
+  // results = computed(() => this.investmentService.resultsData());
+
+  results = this.investmentService.resultsData.asReadonly();
+
+  // get results() {
+  //   return this.investmentService.resultsData;
+  // }
 }
