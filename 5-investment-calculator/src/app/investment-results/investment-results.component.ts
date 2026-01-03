@@ -1,6 +1,7 @@
 import { CurrencyPipe, NgFor, NgIf } from '@angular/common';
-import { Component, input, Input } from '@angular/core';
+import { Component, inject, input, Input } from '@angular/core';
 import { AnnualData } from '../../annual-data.model';
+import { InvestmentService } from '../investment.service';
 
 @Component({
   selector: 'app-investment-results',
@@ -11,5 +12,11 @@ import { AnnualData } from '../../annual-data.model';
 })
 export class InvestmentResultsComponent {
   // @Input() results?: AnnualData[] = [];
-  results = input<AnnualData[]>();
+  // results = input<AnnualData[]>();
+
+  private investmentService = inject(InvestmentService);
+
+  get results() {
+    return this.investmentService.resultsData;
+  }
 }
