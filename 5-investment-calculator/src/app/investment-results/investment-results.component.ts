@@ -5,8 +5,8 @@ import { InvestmentService } from '../investment.service';
 
 @Component({
   selector: 'app-investment-results',
-  standalone: true,
-  imports: [NgFor, NgIf, CurrencyPipe],
+  // standalone: true,
+  // imports: [NgFor, NgIf, CurrencyPipe],
   templateUrl: './investment-results.component.html',
   styleUrl: './investment-results.component.css',
 })
