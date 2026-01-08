@@ -2,7 +2,7 @@
   <ul>
     @for(ticket of tickets; track ticket.id) {
     <li>
-      <app-ticket />
+      <app-ticket [data]="ticket" (close)="onCloseTicket(ticket.id)" />
       <!-- <p>{{ "First - " + $first }}</p>
       <p>{{ "Last - " + $last }}</p>
       <p>{{ "Even - " + $even }}</p>
